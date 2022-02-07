@@ -1,16 +1,18 @@
 require("dotenv").config();
 const express = require("express");
+const { routerApi } = require("./router");
 
 // Initializations
 const app = express();
+const PORT = process.env.PORT;
+routerApi(app);
 
 // Setters
-app.set("port", process.env.PORT);
 
 // listener on port
 if (process.env.ENVIRONMENT !== "TEST") {
-  app.listen(() => {
-    console.log("Listening on port", app.get("port"));
+  app.listen(PORT, () => {
+    console.log("Listening on port", PORT);
   });
 } else {
   module.exports = {
