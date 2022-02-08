@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const mockupArray = [
+const mockupArrayProducts = [
   {
     id: "as5a878s7dsds5",
     price: 2.3,
@@ -16,13 +16,43 @@ const mockupArray = [
 ]; // FIXME: Later in a service folder
 
 router.get("/", (req, res) => {
-  res.status(200).json(mockupArray);
+  const { inputSearchBy } = req.query;
+
+  const attrs = [
+    "name",
+    "categoriesIds",
+    "price",
+    "description"
+  ];
+
+  let filteredResult = [];
+
+  if (inputSearchBy) {
+    mockupArrayProducts.map((product) => {
+      for (const attr of attrs) {
+        if (typeof product[attr] === "string" || typeof product[attr] === "number") {
+          const filter = toString(product[attr]).includes(inputSearchBy);
+          if (filter) filteredResult.push(product);
+        } else {
+          product[attr].map((category) => {
+            const filter = toString(category).includes(inputSearchBy);
+            if (filter) filteredResult.push(category);
+          });
+        }
+      }
+    });
+    console.log(filteredResult);
+
+    res.status(200).json(filteredResult);
+  } else {
+    res.status(200).json(mockupArrayProducts);
+  }
 });
 
 router.get("/:productId", (req, res) => {
   const { productId } = req.params;
 
-  const product = mockupArray.find((prod) => prod.id === productId);
+  const product = mockupArrayProducts.find((prod) => prod.id === productId);
 
   if (!product) {
     res.status(404).json({
