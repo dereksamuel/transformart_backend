@@ -25,10 +25,12 @@ describe("GET /api/v1/products", () => {
     expect(Array.isArray(products)).not.toBeFalsy();
   });
 
-  test("should respond with the filter that we do", async () => {
+  test("should respond with the filter that we do(searchBy name)", async () => {
     products = await request(app)
       .get("/api/v1/products")
-      .query("") // FIXME: In the future do this queries for the search page
+      .query({
+        searchBy: "name"
+      }) // FIXME: In the future do this queries for the search page
       .expect("Content-Type", /json/)
       .expect(200);
     products = products.body;
