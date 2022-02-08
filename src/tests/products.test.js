@@ -28,7 +28,7 @@ describe("GET /api/v1/products", () => {
   test("should respond with the filter that we do", async () => {
     products = await request(app)
       .get("/api/v1/products")
-      .query("") // FIXME: In the future do this queries for the serach page
+      .query("") // FIXME: In the future do this queries for the search page
       .expect("Content-Type", /json/)
       .expect(200);
     products = products.body;
@@ -80,7 +80,7 @@ describe("GET /api/v1/products/:productId", () => {
       notFoundResponse = notFoundResponse.body;
     });
 
-    test("should contain a message and status var", async () => {
+    test("should contain a message and status var", () => {
       expect(notFoundResponse.message).not.toBeFalsy();
       expect(notFoundResponse.status).not.toBeFalsy();
     });
