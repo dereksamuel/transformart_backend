@@ -5,7 +5,7 @@ const request = require("supertest");
 let products = [];
 const categories = [{ id: "a1212s5-12445a8-78s7-dsd-s57878", name: "Hello", }];
 
-describe("--- GET /api/v1/products ---", () => {
+describe("--------------------------- GET /api/v1/products ---------------------------", () => {
   test("should respond with a 200 status code and content type equals to array", async () => {
     products = await request(app)
       .get("/api/v1/products")
@@ -16,17 +16,7 @@ describe("--- GET /api/v1/products ---", () => {
     expect(Array.isArray(products)).not.toBeFalsy();
   });
 
-  test("should respond with a 200 status code and content type equals to array", async () => {
-    products = await request(app)
-      .get("/api/v1/products")
-      .expect("Content-Type", /json/)
-      .expect(200);
-    products = products.body;
-
-    expect(Array.isArray(products)).not.toBeFalsy();
-  });
-
-  test("should respond with the filter that we do(searchBy...)", async () => {
+  test("should respond with the status attr(inputSearchBy...)", async () => {
     products = await request(app)
       .get("/api/v1/products")
       .query({
@@ -36,11 +26,35 @@ describe("--- GET /api/v1/products ---", () => {
       .expect("Content-Type", /json/);
     products = products.body;
 
-    expect(products.length).toBeTruthy();
+    expect(products.status).not.toBeFalsy();
+    // expect(products.productsFiltered.length).not.toBeFalsy();
+  });
+
+  test("should respond with status attr(categoryId...)", async () => {
+    products = await request(app)
+      .get("/api/v1/products")
+      .query({
+        categoryId: "a1212s5-12445a8-78s7-dsd-ss4d85s78s57878"
+      }) // FIXME: In the future do this queries for the search page
+      .expect(200)
+      .expect("Content-Type", /json/);
+    products = products.body;
+
+    expect(products.status).not.toBeFalsy();
+  });
+
+  test("should respond with a 200 status code and content type equals to array", async () => {
+    products = await request(app)
+      .get("/api/v1/products")
+      .expect("Content-Type", /json/)
+      .expect(200);
+    products = products.body;
+
+    expect(Array.isArray(products)).not.toBeFalsy();
   });
 });
 
-describe("--- GET /api/v1/products/:productId ---", () => {
+describe("--------------------------- GET /api/v1/products/:productId ---------------------------", () => {
   describe("when the product was found", () => {
     test("should respond with a 200 status code and content type equals to an object", async () => {
       product = await request(app)

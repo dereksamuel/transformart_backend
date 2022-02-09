@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+// const { CategoryService } = require("../services/categories.services");
+
+// const categoryInstance = new CategoryService();
 
 const mockupArrayProducts = [
   {
@@ -9,43 +12,87 @@ const mockupArrayProducts = [
     description: "Hello my product",
     srcImage: "https://platzi.com/png.png",
     srcVideo: "https://platzi.com/png.mp4",
-    categoriesIds: [
-      "a1212s5-12445a8-78s7-dsd-s57878"
+    categories: [
+      {
+        id: "a1212s5-12445a8-78s7-dsd-ss4d85s78s57878",
+        name: "CategoryName"
+      },
+      {
+        id: "as8sd45u-4ghg-ifgdfs-qasdfsfdfsdsa9s8d9a8s-l-s",
+        name: "CategoryName3"
+      }
+    ]
+  },
+  {
+    id: "as5a878s7d5",
+    price: 4.3,
+    name: "Mi product 2 PNG",
+    description: "Hellos my product derek",
+    srcImage: "https://platzi.com/png.png",
+    srcVideo: "https://platzi.com/png.mp4",
+    categories: [
+      {
+        id: "a1212s5-12445a8-78s7-dsd-ss4d85s78s57878",
+        name: "CategoryName"
+      },
+      {
+        id: "as8sd45u-4ghg-ifgdfs-qas",
+        name: "CategoryName2"
+      }
     ]
   }
 ]; // FIXME: Later in a service folder
 
 router.get("/", (req, res) => {
-  const { inputSearchBy } = req.query;
+  const { inputSearchBy, categoryId } = req.query;
 
-  const attrs = [
+  const attrsByFilter = [
     "name",
-    "categoriesIds",
     "price",
     "description"
   ];
 
-  let filteredResult = [];
+  let productsFiltered = [];
+  let permitedProducts = [];
+  let status = false;
 
-  if (inputSearchBy) {
-    mockupArrayProducts.map((product) => {
-      for (const attr of attrs) {
-        if (typeof product[attr] === "string" || typeof product[attr] === "number") {
-          const filter = toString(product[attr]).includes(inputSearchBy);
-          if (filter) filteredResult.push(product);
-        } else {
-          product[attr].map((category) => {
-            const filter = toString(category).includes(inputSearchBy);
-            if (filter) filteredResult.push(category);
-          });
-        }
+  if (categoryId) {
+    mockupArrayProducts.map((mockupArrayProduct) => {
+      const finalFilter = mockupArrayProduct.categories.filter((category) => {
+        return category.id === categoryId;
+      });
+
+      if (finalFilter.length) {
+        permitedProducts.push(mockupArrayProduct);
       }
     });
-    console.log(filteredResult);
 
-    res.status(200).json(filteredResult);
+    
+    status = Boolean(permitedProducts.length);
+    productsFiltered = permitedProducts;
+  }
+
+  if (inputSearchBy) {
+    for (const attrFilter of attrsByFilter) {
+      const filteredResult = mockupArrayProducts.filter((mockupArrayProduct) =>
+        `${mockupArrayProduct[attrFilter]}`.includes(inputSearchBy)
+      );
+
+      productsFiltered.push(...filteredResult);
+    }
+
+    status = Boolean(productsFiltered.length);
+
+    res.status(200).json({
+      status,
+      productsFiltered
+    });
   } else {
-    res.status(200).json(mockupArrayProducts);
+    if (categoryId) res.status(200).send({
+      status,
+      productsFiltered
+    });
+    else res.status(200).json(mockupArrayProducts);
   }
 });
 
