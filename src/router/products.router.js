@@ -52,48 +52,7 @@ router.get("/", (req, res) => {
     "description"
   ];
 
-  let productsFiltered = [];
-  let permitedProducts = [];
-  let status = false;
-
-  if (categoryId) {
-    mockupArrayProducts.map((mockupArrayProduct) => {
-      const finalFilter = mockupArrayProduct.categories.filter((category) => {
-        return category.id === categoryId;
-      });
-
-      if (finalFilter.length) {
-        permitedProducts.push(mockupArrayProduct);
-      }
-    });
-
-    
-    status = Boolean(permitedProducts.length);
-    productsFiltered = permitedProducts;
-  }
-
-  if (inputSearchBy) {
-    for (const attrFilter of attrsByFilter) {
-      const filteredResult = mockupArrayProducts.filter((mockupArrayProduct) =>
-        `${mockupArrayProduct[attrFilter]}`.includes(inputSearchBy)
-      );
-
-      productsFiltered.push(...filteredResult);
-    }
-
-    status = Boolean(productsFiltered.length);
-
-    res.status(200).json({
-      status,
-      productsFiltered
-    });
-  } else {
-    if (categoryId) res.status(200).send({
-      status,
-      productsFiltered
-    });
-    else res.status(200).json(mockupArrayProducts);
-  }
+  res.status(200).json(mockupArrayProducts);
 });
 
 router.get("/:productId", (req, res) => {
