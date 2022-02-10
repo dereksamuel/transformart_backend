@@ -1,14 +1,14 @@
 const express = require("express");
-const { router: productsRouter } = require("./products.router");
+const { productsRouter } = require("./products.router.js");
 
-const routerApi = (app) => {
-  const versionOne = express.Router();
+function routerApi(app) {
+	const router = express.Router();
 
-  versionOne.use("/products", productsRouter);
+	router.use("/products", productsRouter);
 
-  app.use("/api/v1", versionOne);
-};
+	app.use("/api/v1", router);
+}
 
 module.exports = {
-  routerApi
+	routerApi
 };
