@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "transformart_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "storage": "/C:/Users/Otros Admin/code/transformart_backend/db/index.db",
+    "dialect": "sqlite"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "transformart_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

@@ -1,4 +1,8 @@
-require("dotenv").config();
+
+const { verifyPath } = require("./utils/verifyPath");
+require("dotenv").config({
+	path: verifyPath(),
+});
 const express = require("express");
 const { routerApi } = require("./router/");
 
