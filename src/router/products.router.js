@@ -44,13 +44,14 @@ const mockupArrayProducts = [
 ]; // FIXME: Later in a service folder
 
 router.get("/", (req, res) => {
-  const { inputSearchBy, categoryId } = req.query;
-
+  // const { inputSearchBy, categoryId } = req.query;
   const attrsByFilter = [
     "name",
     "price",
     "description"
   ];
+
+  console.log(attrsByFilter);
 
   res.status(200).json(mockupArrayProducts);
 });
