@@ -1,0 +1,6 @@
+module.exports = {
+  "config": "./src/db/config.js",
+  "models-paths": "./src/db/models/",
+  "migrations-paths": "./src/db/migrations/",
+  "seeders-paths": "./src/db/seeders/", // masive carge of data for testing
+};
