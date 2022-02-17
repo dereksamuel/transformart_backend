@@ -1,0 +1,18 @@
+type Product {
+  id: Int!
+  name: String!
+  price: Float!
+  offer: Float!
+  description: String!
+  src_image: String!
+  src_video: String!
+  facebook_link: String!
+  instagram_link: String!
+  tweeter_link: String!
+  created_at: String
+}
+
+type Query {
+  getProducts: [Product]!
+  getProduct: Product!
+}

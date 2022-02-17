@@ -6,7 +6,10 @@ require("dotenv").config({
 
 const express = require("express");
 const cors = require("cors");
-const { routerApi } = require("./router/");
+const { graphqlHTTP } = require("express-graphql");
+const { buildSchema } = require("graphql");
+const { fileImport } = require("./utils/fileImport");
+// FIXME: This will be examinated with calm const { routerApi } = require("./router/");
 
 // intializations
 const app = express();
@@ -28,9 +31,15 @@ const corsOptions = {
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use("/api/v1/gql", graphqlHTTP({
+	schema: buildSchema(fileImport("../squemas/index.graphql")),
+	rootValue: {
+		hello: () => "Hello World and Derek Handsome",
+	},
+	graphiql: true
+}));
 
 const PORT = process.env.PORT;
-routerApi(app);
 
 app.listen(PORT, () => {
 	console.log("Listening on port", PORT);
