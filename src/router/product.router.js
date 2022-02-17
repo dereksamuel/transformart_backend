@@ -30,7 +30,7 @@ productsRouter.patch("/:productId", async (req, res) => {
 		data: req.body
 	});
 
-	res.status(201).json(product);
+	res.status(200).json(product);
 });
 
 productsRouter.delete("/:productId", async (req, res) => {
@@ -38,7 +38,7 @@ productsRouter.delete("/:productId", async (req, res) => {
 
 	const { id } = await productsInstance.delete(productId);
 
-	res.status(201).json(id);
+	res.status(200).json(id);
 });
 
 module.exports = {

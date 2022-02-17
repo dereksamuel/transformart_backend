@@ -29,6 +29,11 @@ class ProductService {
 
   async getOne({ id }) {
     const product = await models.Product.findByPk(id);
+
+    if (!product) {
+      console.error("Product not found");
+    }
+
     return product;
   }
 }

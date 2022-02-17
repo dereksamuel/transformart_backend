@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --trace-deprecation src/index.js --env_dev",
-    "start": "node src/index.js --env_prod"
+    "start": "node src/index.js --env_prod",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:rollback": "sequelize-cli db:migrate:undo",
+    "migrations:DELETE": "sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",

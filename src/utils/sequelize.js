@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.URI, {
 
 setupModels(sequelize);
 
-sequelize.sync();// crear estructura de models NO SE ACONSEJA PARA PROD
+// sequelize.sync();// crear estructura de models NO SE ACONSEJA PARA PROD
 
 module.exports = {
   sequelize
