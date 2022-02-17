@@ -1,8 +1,8 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
 class Product extends Model {
-  static associate() {
-    //associate
+  static associate() { // sequelize.models.SomeModel
+    // realtionships
   }
 
   static config(sequelize) {

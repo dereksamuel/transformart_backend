@@ -1,12 +1,12 @@
-const URI = process.env.URI;
+const { development_URI, production_URI } = require("../utils/keys");
 
 module.exports = {
   development: {
-    url: URI,
+    url: development_URI,
     dialect: "sqlite",
   },
   production: {
-    url: URI,
+    url: production_URI,
     dialect: "mysql",
   },
 };
