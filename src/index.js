@@ -7,8 +7,9 @@ require("dotenv").config({
 const express = require("express");
 const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { fileImport } = require("./utils/fileImport");
+const resolvers = require("./resolvers");
 // FIXME: This will be examinated with calm const { routerApi } = require("./router/");
 
 // intializations
@@ -28,14 +29,17 @@ const corsOptions = {
 	},
 };
 
+const schema = makeExecutableSchema({
+	typeDefs: fileImport("../squemas/index.graphql"),
+	resolvers
+});
+
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api/v1/gql", graphqlHTTP({
-	schema: buildSchema(fileImport("../squemas/index.graphql")),
-	rootValue: {
-		hello: () => "Hello World and Derek Handsome",
-	},
+	schema,
+	rootValue: resolvers,
 	graphiql: true
 }));
 

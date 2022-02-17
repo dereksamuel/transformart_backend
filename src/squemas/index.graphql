@@ -4,15 +4,17 @@ type Product {
   price: Float!
   offer: Float!
   description: String!
-  src_image: String!
-  src_video: String!
-  facebook_link: String!
-  instagram_link: String!
-  tweeter_link: String!
-  created_at: String
+  srcImage: String!
+  srcVideo: String!
+  facebookLink: String!
+  instagramLink: String!
+  tweeterLink: String!
+  createdAt: String
 }
 
 type Query {
+  "It Returns all products without auth"
   getProducts: [Product]!
-  getProduct: Product!
+  "It Returns one product without auth"
+  getProduct(productId: Int!): Product!
 }
