@@ -1,8 +1,11 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
 class Product extends Model {
-  static associate() { // sequelize.models.SomeModel
-    // realtionships
+  static associate(models) { // sequelize.models.SomeModel
+    this.hasMany(models.CategoriesProducts, {
+      as: "products",
+      foreignKey: "id",
+    });
   }
 
   static config(sequelize) {
@@ -10,7 +13,7 @@ class Product extends Model {
       sequelize,
       tableName: "products",
       modelName: "Product",
-      timestamps: false,
+      timestamps: false
     };
   }
 } // represents a table in my database
