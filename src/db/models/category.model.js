@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 
 const CATEGORY_TABLE_NAME = "categories";
-const CATEGORY_MODEL_NAME = "Categories";
+const CATEGORY_MODEL_NAME = "Category";
 
 class Category extends Model {
   static associate(models) {
