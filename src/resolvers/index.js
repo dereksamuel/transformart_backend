@@ -7,10 +7,10 @@ const productQueries = require("./queries/product.queries");
 const productMutations = require("./mutations/product.mutations");
 
 module.exports = {
-	Query: {
-		...productQueries(models)
-	},
-	Mutation: {
-		...productMutations(models)
-	},
+  Query: {
+    ...productQueries(models)
+  },
+  Mutation: {
+    ...productMutations(models)
+  },
 };

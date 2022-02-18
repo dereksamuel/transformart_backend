@@ -1,56 +1,60 @@
 const { Model, DataTypes } = require("sequelize");
 const { tableName: productTableName } = require("./product.model");
+const { tableName: categoryTableName } = require("./category.model");
 
-const tableName = "categories_products";
+const CATEGORIES_PRODUCTS_TABLE_NAME = "categories_products";
+const CATEGORIES_PRODUCTS_MODEL_NAME = "CategoriesProducts";
+
 class CategoriesProducts extends Model {
-	static associate(models) {
-		this.belongsTo(models.Product, { as: "product" });
-		// this.belongsTo(models.Product, { as: "" }); UNO A UNO
-	}
+  static associate(models) {
+    this.belongsTo(models.Product, { as: "product" }); // one to one
+    this.belongsTo(models.Category, { as: "category" }); // one to one
+  }
 
-	static config(sequelize) {
-		return {
-			sequelize,
-			tableName,
-			modelName: "CategoriesProducts",
-			timestamps: false
-		};
-	}
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: CATEGORIES_PRODUCTS_TABLE_NAME,
+      modelName: CATEGORIES_PRODUCTS_MODEL_NAME,
+      timestamps: false
+    };
+  }
 }
 
-const CategoriesProductsSchema = {
-	id: {
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		primaryKey: true,
-		autoIncrement: true
-	},
-	categoriesId: {
-		field: "categories_id",
-		type: DataTypes.INTEGER,
-		allowNull: false
-		// references: {
-		//   model: productTableName,
-		//   key: id
-		// },
-		// onUpdate: "CASCADE",
-		// onDelete: "CASCADE"
-	},
-	productsId: {
-		field: "products_id",
-		type: DataTypes.INTEGER,
-		allowNull: false,
-		references: {
-			model: productTableName,
-			key: "id"
-		},
-		onUpdate: "CASCADE",
-		onDelete: "CASCADE"
-	},
+const CATEGORIES_PRODUCTS_SCHEMA = {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  categoriesId: {
+    field: "categories_id",
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: categoryTableName,
+      key: "id"
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  },
+  productsId: {
+    field: "products_id",
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: productTableName,
+      key: "id"
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  },
 };
 
 module.exports = {
-	CategoriesProductsSchema,
-	CategoriesProducts,
-	tableName,
+  CategoriesProducts,
+  CATEGORIES_PRODUCTS_SCHEMA,
+  tableName: CATEGORIES_PRODUCTS_TABLE_NAME,
+  CATEGORIES_PRODUCTS_MODEL_NAME
 };

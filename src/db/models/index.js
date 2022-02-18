@@ -1,14 +1,19 @@
-const { CategoriesProducts, CategoriesProductsSchema } = require("./categories_products.model");
-const { Product, ProductSchema } = require("./product.model");
+const { CategoriesProducts, CATEGORIES_PRODUCTS_SCHEMA } = require("./categories_products.model");
+const { Category, CATEGORY_SCHEMA } = require("./category.model");
+const { Product, PRODUCT_SCHEMA } = require("./product.model");
 
 function setupModels(sequelize) {
-	Product.init(ProductSchema, Product.config(sequelize));
-	CategoriesProducts.init(CategoriesProductsSchema, CategoriesProducts.config(sequelize));
+  // create tables by schemas
+  Product.init(PRODUCT_SCHEMA, Product.config(sequelize));
+  Category.init(CATEGORY_SCHEMA, Category.config(sequelize));
+  CategoriesProducts.init(CATEGORIES_PRODUCTS_SCHEMA, CategoriesProducts.config(sequelize));
 
-	CategoriesProducts.associate(sequelize.models);
-	Product.associate(sequelize.models);
+  // init relationships
+  CategoriesProducts.associate(sequelize.models);
+  Product.associate(sequelize.models);
+  Category.associate(sequelize.models);
 }
 
 module.exports = {
-	setupModels
+  setupModels
 };
