@@ -4,39 +4,41 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env ENVIRONMENT=DEV nodemon src/",
-    "start": "cross-env ENVIRONMENT=PROD node src/",
-    "test": "cross-env ENVIRONMENT=TEST jest src/tests --detectOpenHandles",
-    "coverage": "cross-env ENVIRONMENT=TEST jest src/ --coverage --detectOpenHandles",
-    "lint": "eslint src/ --fix",
-    "lint_general": "eslint --fix"
+    "dev": "nodemon --trace-deprecation src/index.js --env_dev",
+    "start": "node src/index.js --env_prod",
+    "lint": "eslint ./src --fix",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:run:prod": "sequelize-cli db:migrate --env production",
+    "migrations:rollback": "sequelize-cli db:migrate:undo",
+    "migrations:DELETE": "sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dereksamuel/transformart_backend.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Derek Paul",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dereksamuel/transformart_backend/issues"
   },
   "homepage": "https://github.com/dereksamuel/transformart_backend#readme",
   "dependencies": {
-    "cross-env": "^7.0.3",
+    "@graphql-tools/schema": "^8.3.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.2",
-    "mysql": "^2.18.1",
+    "express": "^4.17.3",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
+    "graphql-tools": "^8.2.0",
+    "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
-    "supertest": "^6.2.2"
+    "sequelize": "^6.16.1",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "eslint": "^8.8.0",
-    "jest": "^27.5.0"
-  },
-  "jest": {
-    "globals": {
-      "__DEV__": true
-    }
+    "eslint": "^8.9.0",
+    "sequelize-cli": "^6.4.1"
   }
 }
