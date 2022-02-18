@@ -10,7 +10,6 @@ const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { fileImport } = require("./utils/fileImport");
 const resolvers = require("./resolvers");
-// FIXME: This will be examinated with calm const { routerApi } = require("./router/");
 
 // intializations
 const app = express();
