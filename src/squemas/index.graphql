@@ -49,4 +49,8 @@ type Mutation {
     tweeterLink: String
     createdAt: String
   ): Product
+  "It delete one product and returns id deleted"
+  deleteProduct(
+    id: Int!
+  ): String
 }

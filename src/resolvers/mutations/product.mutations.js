@@ -9,5 +9,12 @@ module.exports = (models) => ({
 		const response = await product.update(data);
 
 		return response;
+	},
+
+	async deleteProduct(root, { id }) {
+		const product = await root.Query.getProduct(root, { productId: id });
+		await product.destroy();
+
+		return id;
 	}
 });
