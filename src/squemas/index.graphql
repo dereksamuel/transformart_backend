@@ -1,3 +1,8 @@
+type CategoriesProducts {
+  id: Int!
+  categoriesId: Int!
+}
+
 type Product {
   id: Int!
   name: String!
@@ -20,7 +25,7 @@ type Query {
   getProduct(productId: Int!): Product
 }
 
-"This fields are: products, categories and categories_products ONLY FOR THE AUTHORIZATED USER WITH FIREBASE"
+"This field is: products ONLY FOR THE AUTHORIZATED USER WITH FIREBASE"
 type Mutation {
   "It create some product and should returns a product"
   createProduct(
@@ -54,3 +59,23 @@ type Mutation {
     id: Int!
   ): String
 }
+
+"This field is: cateogries_products ONLY FOR THE AUTHORIZATED USER WITH FIREBASE"
+type Mutation {
+  "It create some product and should returns a product"
+  createCategoriesProduct(
+    categoryId: Int!
+    productId: Int!
+  ): CategoriesProducts
+  "It update some product and should returns a product"
+  updateCategoriesProduct(
+    id: Int!
+    categoryId: Int
+    productId: Int
+  ): CategoriesProducts
+  "It delete one product and returns id deleted"
+  deleteCategoriesProduct(
+    id: Int!
+  ): String
+}
+
