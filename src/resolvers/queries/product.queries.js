@@ -8,7 +8,7 @@ module.exports = (models) => ({
 		const product = await models.Product.findByPk(productId);
 
 		if (!product) {
-			console.error("Product not found");
+			console.error("Product not founded");
 			return ["Hola"];
 		}
 

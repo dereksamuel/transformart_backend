@@ -12,9 +12,41 @@ type Product {
   createdAt: String
 }
 
+"This fields are: products, categories and categories_products"
 type Query {
   "It Returns all products without auth"
-  getProducts: [Product]!
+  getProducts: [Product]
   "It Returns one product without auth"
   getProduct(productId: Int!): Product
+}
+
+"This fields are: products, categories and categories_products ONLY FOR THE AUTHORIZATED USER WITH FIREBASE"
+type Mutation {
+  "It create some product and should returns a product"
+  createProduct(
+    name: String!
+    price: Float!
+    offer: Float!
+    description: String!
+    srcImage: String!
+    srcVideo: String!
+    facebookLink: String!
+    instagramLink: String!
+    tweeterLink: String!
+    createdAt: String
+  ): Product
+  "It update some product and should returns a product"
+  updateProduct(
+    id: Int!
+    name: String
+    price: Float
+    offer: Float
+    description: String
+    srcImage: String
+    srcVideo: String
+    facebookLink: String
+    instagramLink: String
+    tweeterLink: String
+    createdAt: String
+  ): Product
 }
