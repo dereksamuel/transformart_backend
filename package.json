@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon --trace-deprecation src/index.js --env_dev",
     "start": "node src/index.js --env_prod",
+    "lint": "eslint ./src --fix",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:run:prod": "sequelize-cli db:migrate --env production",
@@ -37,6 +38,7 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "eslint": "^8.9.0",
     "sequelize-cli": "^6.4.1"
   }
 }

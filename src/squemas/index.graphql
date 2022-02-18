@@ -16,5 +16,5 @@ type Query {
   "It Returns all products without auth"
   getProducts: [Product]!
   "It Returns one product without auth"
-  getProduct(productId: Int!): Product!
+  getProduct(productId: Int!): Product
 }

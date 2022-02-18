@@ -4,7 +4,7 @@ const { sequelize: { models } } = require("../utils/sequelize");
 const productQueries = require("./queries/product.queries");
 
 module.exports = {
-  Query: {
-    ...productQueries(models)
-  }
+	Query: {
+		...productQueries(models)
+	}
 };
