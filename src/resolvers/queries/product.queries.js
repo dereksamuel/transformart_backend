@@ -9,7 +9,7 @@ module.exports = (models) => ({
 
     if (!product) {
       console.error("Product not founded");
-      return ["Hola"];
+      return [];
     }
 
     return product;
