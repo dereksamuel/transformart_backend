@@ -87,5 +87,3 @@ type Mutation {
     id: Int!
   ): String
 }
-
-"FIXME: Do realeses for stackoverflow make the question about error ERROR: Error parsing url: sqlite:index.db"
