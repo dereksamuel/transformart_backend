@@ -32,7 +32,7 @@ const CATEGORIES_PRODUCTS_SCHEMA = {
     field: "categories_id",
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
+    unique: false,
     references: {
       model: categoryTableName,
       key: "id"
@@ -44,7 +44,7 @@ const CATEGORIES_PRODUCTS_SCHEMA = {
     field: "products_id",
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
+    unique: false,
     references: {
       model: productTableName,
       key: "id"
