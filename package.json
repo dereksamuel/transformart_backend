@@ -7,7 +7,7 @@
     "dev": "nodemon --trace-deprecation src/index.js --env_dev",
     "start": "node src/index.js --env_prod",
     "lint": "eslint ./src --fix",
-    "test": "jest ./src/tests --config=jest.config.js --detectOpenHandles",
+    "test": "jest ./src/tests --detectOpenHandles",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:run:prod": "sequelize-cli db:migrate --env production",
@@ -31,17 +31,20 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-graphql": "^0.12.0",
+    "flatted": "^3.2.5",
     "graphql": "^15.8.0",
     "graphql-tools": "^8.2.0",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
     "sequelize": "^6.16.1",
-    "sqlite3": "^5.0.2",
-    "supertest": "^6.2.2"
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "^8.9.0",
     "jest": "^27.5.1",
     "sequelize-cli": "^6.4.1"
+  },
+  "jest": {
+    "globalSetup": "./src/tests/setup.js"
   }
 }
