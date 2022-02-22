@@ -18,3 +18,4 @@ js ``
 ## Migraciones
   propagar cambios, sistema de control de versiones
   Siempre una primer migracion, llaves foraneas y etc... y enviamos realeses.
+3:55 https://www.youtube.com/watch?v=Pv_0UpaxVHU&ab_channel=BenAwad
