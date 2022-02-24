@@ -2,7 +2,20 @@
 const productMutations = require("../resolvers/mutations/product.mutations");
 const productQueries = require("../resolvers/queries/product.queries");
 
+const { JSONparser } = require("../utils/parser");
+
 const MODELS = process.models;
+const productMock = {
+  name: "Tester product",
+  price: 450000,
+  offer: 0,
+  description: "My tester product",
+  srcImage: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
+  srcVideo: "https://youtu.be/WCi2DLYE82A",
+  facebookLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
+  instagramLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
+  tweeterLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
+};
 
 describe("-- Product Queries --", () => {
   let mutations = null;
@@ -13,12 +26,32 @@ describe("-- Product Queries --", () => {
     mutations = productMutations(MODELS);
   });
 
-  test("getProducts", async () => {
-    const products = JSON.parse(JSON.stringify(await queries.getProducts()));
-    
+  describe("getProducts", async () => {
+    const products = JSONparser(await queries.getProducts());
+
     expect(products).not.toBe(undefined);
     expect(products.length).not.toBe(0);
+  });
 
-    console.log(mutations);
+  describe("getProducts", async () => {
+    const products = JSONparser(await queries.getProducts());
+
+    expect(products).not.toBe(undefined);
+    expect(products.length).not.toBe(0);
+  });
+
+  describe("createProduct", () => {
+    test("When I am not autohrized", async () => {
+      const product = JSONparser(await mutations.createProduct(null, productMock));
+      // FIXME: Fix me later, with complete authorized protocol with firebase
+
+      expect(product).toBeFalsy();
+    });
+
+    test("When I am autohrized", async () => {
+      const product = JSONparser(await mutations.createProduct(null, productMock));
+
+      expect(product).toBeTruthy();
+    });
   });
 });

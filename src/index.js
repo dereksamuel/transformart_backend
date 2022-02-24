@@ -44,7 +44,7 @@ app.use("/api/v1/gql", graphqlHTTP({
 
 const PORT = process.env.PORT;
 
-if (verifyPath() === "./.env") { // if we be in prod mode
+if (process.argv.find((arg) => arg !== "--mode-test")) { // if we be in prod mode
   app.listen(PORT, () => {
     console.log("Listening on port", PORT);
   });
