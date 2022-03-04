@@ -1,3 +1,5 @@
+#FIXME: Arreglar con directivas este coso del auth directive @auth(uid: String) on FIELD_DEFINITION
+
 type CategoriesProducts {
   id: Int
   categoriesId: Int
