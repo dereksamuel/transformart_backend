@@ -1,4 +1,4 @@
-module.exports = (models) => ({
+module.exports = ({ models }) => ({
   async createCategory(root, data) {
     const newCategory = await models.Category.create(data);
     return newCategory;

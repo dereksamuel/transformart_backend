@@ -26,32 +26,23 @@ describe("-- Product Queries --", () => {
     mutations = productMutations(MODELS);
   });
 
-  describe("getProducts", async () => {
+  test("getProducts", async () => {
     const products = JSONparser(await queries.getProducts());
 
     expect(products).not.toBe(undefined);
     expect(products.length).not.toBe(0);
   });
 
-  describe("getProducts", async () => {
-    const products = JSONparser(await queries.getProducts());
+  test("createProduct -- When I am not authorized", async () => {
+    const product = JSONparser(await mutations.createProduct(null, productMock));
+    // FIXME: Fix me later, with complete authorized protocol with firebase
 
-    expect(products).not.toBe(undefined);
-    expect(products.length).not.toBe(0);
+    expect(product).toBeFalsy();
   });
 
-  describe("createProduct", () => {
-    test("When I am not autohrized", async () => {
-      const product = JSONparser(await mutations.createProduct(null, productMock));
-      // FIXME: Fix me later, with complete authorized protocol with firebase
+  test("createProduct -- When I am authorized", async () => {
+    const product = JSONparser(await mutations.createProduct(null, productMock));
 
-      expect(product).toBeFalsy();
-    });
-
-    test("When I am autohrized", async () => {
-      const product = JSONparser(await mutations.createProduct(null, productMock));
-
-      expect(product).toBeTruthy();
-    });
+    expect(product).toBeTruthy();
   });
 });

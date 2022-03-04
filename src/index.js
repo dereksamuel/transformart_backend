@@ -9,6 +9,7 @@ const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { fileImport } = require("./utils/fileImport");
+const { authMiddleware } = require("./middlewares/authMiddleware.middlewares");
 const resolvers = require("./resolvers");
 
 // intializations
@@ -36,7 +37,7 @@ const schema = makeExecutableSchema({
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/v1/gql", graphqlHTTP({
+app.use("/api/v1/gql", authMiddleware, graphqlHTTP({
   schema,
   rootValue: resolvers,
   graphiql: true

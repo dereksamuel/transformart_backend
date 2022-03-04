@@ -1,4 +1,4 @@
-module.exports = (models) => ({
+module.exports = ({ models }) => ({
   async createProduct(root, data) {
     const newProduct = await models.Product.create(data);
     return newProduct;

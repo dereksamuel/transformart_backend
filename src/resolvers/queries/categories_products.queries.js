@@ -1,6 +1,6 @@
 const attributes = ["id", ["categories_id", "categoriesId"], ["products_id", "productsId"]];
 
-module.exports = (models) => ({
+module.exports = ({ models }) => ({
   async getCategoriesProducts() {
     const categoriesProducts = await models.CategoriesProducts.findAll({
       attributes

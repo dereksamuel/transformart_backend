@@ -1,4 +1,5 @@
 const { sequelize: { models } } = require("../utils/sequelize");
+// const { auth } = require("../utils/firebase");
 
 // queries
 const productQueries = require("./queries/product.queries");
@@ -10,15 +11,19 @@ const productMutations = require("./mutations/product.mutations");
 const categoriesMutations = require("./mutations/category.mutations");
 const categoriesProductMutations = require("./mutations/categories_products.mutations");
 
+const options = {
+  models
+};
+
 module.exports = {
   Query: {
-    ...productQueries(models),
-    ...categoriesProductQueries(models),
-    ...categoriesQueries(models)
+    ...productQueries(options),
+    ...categoriesProductQueries(options),
+    ...categoriesQueries(options)
   },
   Mutation: {
-    ...productMutations(models),
-    ...categoriesProductMutations(models),
-    ...categoriesMutations(models)
+    ...productMutations(options),
+    ...categoriesProductMutations(options),
+    ...categoriesMutations(options)
   },
 };

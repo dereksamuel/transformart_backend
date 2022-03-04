@@ -1,4 +1,4 @@
-module.exports = (models) => ({
+module.exports = ({ models }) => ({
   async getCategories() {
     const categories = models.Category.findAll();
     return categories;
