@@ -28,18 +28,18 @@ const corsOptions = {
   },
 };
 
-const schema = makeExecutableSchema({
-  typeDefs: fileImport("../squemas/index.graphql"),
-  // resolvers
-});
-
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/v1/gql", graphqlHTTP((req, res) => {
+app.use("/api/v1/gql", graphqlHTTP((req) => {
+  process.req = req;
+
   return {
-    schema,
-    rootValue: resolvers(req, res),
+    schema: makeExecutableSchema({
+      typeDefs: fileImport("../squemas/index.graphql"),
+      resolvers
+    }),
+    rootValue: resolvers,
     graphiql: true
   };
 }));

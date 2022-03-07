@@ -33,6 +33,7 @@ describe("-- Product Queries --", () => {
     products = JSONparser(await queries.getProducts());
 
     expect(products).not.toBe(undefined);
+    expect(Array.isArray(products)).toBeTruthy();
     expect(products.length).not.toBe(0);
   });
 
@@ -40,23 +41,19 @@ describe("-- Product Queries --", () => {
     product = JSONparser(await queries.getProduct(null, { productId: `${products[0].id}` }));
 
     expect(product).not.toBe(undefined);
+    expect(Array.isArray(product)).toBeFalsy();
     expect(product.length).not.toBe(0);
   });
 
-  // test("createProduct -- When I am not authorized", async () => {
-  //   const product = JSONparser(await mutations.createProduct(null, productMock));
-  //   // FIXME: Fix me later, with complete authorized protocol with firebase
-
-  //   expect(product).toBeFalsy();
-  // });
-
-  test("createProduct -- When I am authorized", async () => {
+  test("createProduct", async () => {
     productCreated = JSONparser(await mutations.createProduct(null, productMock));
 
-    expect(productCreated).toBeTruthy();
+    expect(productCreated).not.toBe(undefined);
+    expect(Array.isArray(productCreated)).toBeFalsy();
+    expect(Object.keys(productCreated).length).not.toBe(0);
   });
 
-  test("updateProduct -- When I am authorized", async () => {
+  test("updateProduct", async () => {
     productCreated = JSONparser(await mutations.updateProduct({
       Query: queries
     }, {
@@ -64,10 +61,12 @@ describe("-- Product Queries --", () => {
       ...productMock
     }));
 
-    expect(productCreated).toBeTruthy();
+    expect(productCreated).not.toBe(undefined);
+    expect(Array.isArray(productCreated)).toBeFalsy();
+    expect(Object.keys(productCreated).length).not.toBe(0);
   });
 
-  test("deleteProduct -- When I am authorized", async () => {
+  test("deleteProduct", async () => {
     const productDeleted = JSONparser(await mutations.deleteProduct({
       Query: queries
     }, { id: productCreated.id }));

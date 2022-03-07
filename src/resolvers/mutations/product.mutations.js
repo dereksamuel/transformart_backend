@@ -1,10 +1,24 @@
+const { authMiddleware } = require("../../middlewares/authMiddleware.middlewares");
+
 module.exports = ({ models }) => ({
   async createProduct(root, data) {
+    const isAuthenticate = await authMiddleware(process.req);
+
+    if (isAuthenticate.isError) {
+      throw new Error(isAuthenticate.message);
+    }
+
     const newProduct = await models.Product.create(data);
     return newProduct;
   },
 
   async updateProduct(root, data) {
+    const isAuthenticate = await authMiddleware(process.req);
+
+    if (isAuthenticate.isError) {
+      throw new Error(isAuthenticate.message);
+    }
+
     const product = await root.Query.getProduct(root, { productId: data.id });
     const response = await product.update(data);
 
@@ -12,6 +26,12 @@ module.exports = ({ models }) => ({
   },
 
   async deleteProduct(root, { id }) {
+    const isAuthenticate = await authMiddleware(process.req);
+
+    if (isAuthenticate.isError) {
+      throw new Error(isAuthenticate.message);
+    }
+
     const product = await root.Query.getProduct(root, { productId: id });
     await product.destroy();
 

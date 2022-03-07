@@ -1,76 +1,71 @@
 /* eslint-disable no-undef */
-const categoriesMutations = require("../resolvers/mutations/category.mutations");
-const categoriesQueries = require("../resolvers/queries/category.queries");
+const categoriesProductsMutations = require("../resolvers/mutations/categories_products.mutations");
+const categoriesProductsQueries = require("../resolvers/queries/categories_products.queries");
 
 const { JSONparser } = require("../utils/parser");
 
-const categoryMock = {
-  name: "Tester Category",
-  price: 450000,
-  offer: 0,
-  description: "My tester Category",
-  srcImage: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
-  srcVideo: "https://youtu.be/WCi2DLYE82A",
-  facebookLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
-  instagramLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
-  tweeterLink: "https://i.ytimg.com/vi/cH_yrEmJabE/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLD-MLk7JWqqHtCiEejLIWCLrgkspw",
+const categoryProductsMock = {
+  productsId: 1,
+  categoriesId: 1
 };
 
-describe("-- Category Queries --", () => {
+describe("-- CategoryProduct Queries --", () => {
   let mutations = null;
   let queries = null;
 
-  let categories = [];
-  let category = null;
-  let categoryCreated = null;
+  let categoriesProducts = [];
+  let categoriesProduct = null;
+  let categoriesProductCreated = null;
 
   beforeAll(() => {
-    queries = categoriesQueries({ models: process.models, });
-    mutations = categoriesMutations({ models: process.models, });
+    queries = categoriesProductsQueries({ models: process.models, });
+    mutations = categoriesProductsMutations({ models: process.models, });
   });
 
   test("getCategories", async () => {
-    categories = JSONparser(await queries.getCategories());
+    categoriesProducts = JSONparser(await queries.getCategoriesProducts());
 
-    expect(categories).not.toBe(undefined);
-    expect(Array.isArray(categories)).toBeTruthy();
-    expect(categories.length).not.toBe(0);
+    expect(categoriesProducts).not.toBe(undefined);
+    expect(Array.isArray(categoriesProducts)).toBeTruthy();
+    expect(categoriesProducts.length).not.toBe(0);
   });
 
-  test("getCategory", async () => {
-    category = JSONparser(await queries.getCategory(null, { categoryId: `${categories[0].id}` }));
-
-    expect(category).not.toBe(undefined);
-    expect(Array.isArray(category)).toBeFalsy();
-    expect(category.length).not.toBe(0);
-  });
-
-  test("createCategory", async () => {
-    categoryCreated = JSONparser(await mutations.createCategory(null, categoryMock));
-
-    expect(categoryCreated).not.toBe(undefined);
-    expect(Array.isArray(categoryCreated)).toBeFalsy();
-    expect(Object.keys(categoryCreated).length).not.toBe(0);
-  });
-
-  test("updateCategory", async () => {
-    categoryCreated = JSONparser(await mutations.updateCategory({
-      Query: queries
-    }, {
-      id: categoryCreated.id,
-      ...categoryMock
+  test("getCategoriesProduct", async () => {
+    categoriesProduct = JSONparser(await queries.getCategoriesProduct(null, {
+      categoriesProductsId: `${categoriesProducts[0].id}`
     }));
 
-    expect(categoryCreated).not.toBe(undefined);
-    expect(Array.isArray(categoryCreated)).toBeFalsy();
-    expect(Object.keys(categoryCreated).length).not.toBe(0);
+    expect(categoriesProduct).not.toBe(undefined);
+    expect(Array.isArray(categoriesProduct)).toBeFalsy();
+    expect(Object.keys(categoriesProduct).length).not.toBe(0);
   });
 
-  test("deleteCategory", async () => {
-    const categoryDeleted = JSONparser(await mutations.deleteCategory({
-      Query: queries
-    }, { id: categoryCreated.id }));
+  test("createCategoriesProduct", async () => {
+    categoriesProductCreated = JSONparser(await mutations.createCategoriesProduct(null, categoryProductsMock));
 
-    expect(categoryDeleted).toBeTruthy();
+    expect(categoriesProductCreated).not.toBe(undefined);
+    expect(Array.isArray(categoriesProductCreated)).toBeFalsy();
+    expect(Object.keys(categoriesProductCreated).length).not.toBe(0);
+  });
+
+  test("updateCategoriesProduct", async () => {
+    categoriesProductCreated = JSONparser(await mutations.updateCategoriesProduct({
+      Query: queries
+    }, {
+      id: categoriesProductCreated.id,
+      ...categoryProductsMock
+    }));
+
+    expect(categoriesProductCreated).not.toBe(undefined);
+    expect(Array.isArray(categoriesProductCreated)).toBeFalsy();
+    expect(Object.keys(categoriesProductCreated).length).not.toBe(0);
+  });
+
+  test("deleteCategoriesProduct", async () => {
+    const categoriesProductDeleted = JSONparser(await mutations.deleteCategoriesProduct({
+      Query: queries
+    }, { id: categoriesProductCreated.id }));
+
+    expect(categoriesProductDeleted).toBeTruthy();
   });
 });
