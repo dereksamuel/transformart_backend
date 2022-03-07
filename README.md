@@ -1,5 +1,11 @@
 # Transformart_backend 🦋
 This is an aplication that generate the backend of Transformart enterprise.
+## Env vars
+  PORT the port in that run express server
+  URI uri connection for our db
+  NODE_ENV mode or environment
+  GOOGLE_APPLICATION_CREDENTIALS a .json file that has configuration of firebase
+  KEYJWT jwt key to decode firebase auth token
 ## Usage
 For production:
 js ``

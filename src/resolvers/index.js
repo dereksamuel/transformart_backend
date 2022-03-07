@@ -1,5 +1,5 @@
 const { sequelize: { models } } = require("../utils/sequelize");
-// const { auth } = require("../utils/firebase");
+const { authMiddleware } = require("../middlewares/authMiddleware.middlewares");
 
 // queries
 const productQueries = require("./queries/product.queries");
@@ -15,15 +15,17 @@ const options = {
   models
 };
 
-module.exports = {
+console.log("Hola2");
+
+module.exports = (req, res) => ({
   Query: {
     ...productQueries(options),
     ...categoriesProductQueries(options),
     ...categoriesQueries(options)
   },
-  Mutation: {
+  Mutation: authMiddleware(req, res, {
     ...productMutations(options),
     ...categoriesProductMutations(options),
     ...categoriesMutations(options)
-  },
-};
+  }),
+});

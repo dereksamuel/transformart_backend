@@ -9,7 +9,6 @@ const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { fileImport } = require("./utils/fileImport");
-const { authMiddleware } = require("./middlewares/authMiddleware.middlewares");
 const resolvers = require("./resolvers");
 
 // intializations
@@ -31,16 +30,18 @@ const corsOptions = {
 
 const schema = makeExecutableSchema({
   typeDefs: fileImport("../squemas/index.graphql"),
-  resolvers
+  // resolvers
 });
 
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/v1/gql", authMiddleware, graphqlHTTP({
-  schema,
-  rootValue: resolvers,
-  graphiql: true
+app.use("/api/v1/gql", graphqlHTTP((req, res) => {
+  return {
+    schema,
+    rootValue: resolvers(req, res),
+    graphiql: true
+  };
 }));
 
 const PORT = process.env.PORT;
