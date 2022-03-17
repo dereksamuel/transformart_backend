@@ -1,8 +1,8 @@
+const dayjs = require("dayjs");
 const { firebaseAdmin } = require("../utils/firebase");
 
-async function authMiddleware(req) {
+async function authMiddleware(headerToken) {
   if (!process.argv.find((arg) => arg === "--mode-test")) {
-    let headerToken = req.headers.headertoken;
     if (!headerToken) {
       return {
         isError: true,
@@ -10,10 +10,23 @@ async function authMiddleware(req) {
       };
     }
 
+    if (global.decodedToken) {
+      return global.decodedToken;
+    }
+
     try {
       const decodedToken = await firebaseAdmin
         .auth()
         .verifyIdToken(headerToken);
+      global.decodedToken = decodedToken;
+
+      const interval = setInterval(() => {
+        console.log(dayjs.unix(decodedToken.exp).format("DD/MM/YYYY HH-mm-ss"), dayjs().format("DD/MM/YYYY HH-mm-ss"));
+        if (dayjs.unix(decodedToken.exp).format("DD/MM/YYYY HH-mm-ss") <= dayjs().format("DD/MM/YYYY HH-mm-ss")) {
+          global.decodedToken = null;
+          clearInterval(interval);
+        }
+      }, 1000);
 
       return decodedToken;
     } catch (error) {

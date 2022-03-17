@@ -119,3 +119,9 @@ type Mutation {
     id: Int!
   ): String
 }
+
+type Mutation {
+  authenticate(
+    headerToken: String!
+  ): String
+}

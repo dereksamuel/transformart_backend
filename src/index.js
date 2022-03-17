@@ -14,8 +14,10 @@ const resolvers = require("./resolvers");
 // intializations
 const app = express();
 const whiteList = [
+  "https://compassionate-edison-e8c580.netlify.app",
   "http://localhost:4001",
-  "http://localhost:4000"
+  "http://localhost:4000",
+  "http://localhost:3000"
 ];
 
 const corsOptions = {

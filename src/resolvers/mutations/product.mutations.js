@@ -1,11 +1,7 @@
-const { authMiddleware } = require("../../middlewares/authMiddleware.middlewares");
-
 module.exports = ({ models }) => ({
   async createProduct(root, data) {
-    const isAuthenticate = await authMiddleware(process.req);
-
-    if (isAuthenticate.isError) {
-      throw new Error(isAuthenticate.message);
+    if (!global.decodedToken) {
+      throw new Error("Unauthorized");
     }
 
     const newProduct = await models.Product.create(data);
@@ -13,10 +9,8 @@ module.exports = ({ models }) => ({
   },
 
   async updateProduct(root, data) {
-    const isAuthenticate = await authMiddleware(process.req);
-
-    if (isAuthenticate.isError) {
-      throw new Error(isAuthenticate.message);
+    if (!global.decodedToken) {
+      throw new Error("Unauthorized");
     }
 
     const product = await root.Query.getProduct(root, { productId: data.id });
@@ -26,10 +20,8 @@ module.exports = ({ models }) => ({
   },
 
   async deleteProduct(root, { id }) {
-    const isAuthenticate = await authMiddleware(process.req);
-
-    if (isAuthenticate.isError) {
-      throw new Error(isAuthenticate.message);
+    if (!global.decodedToken) {
+      throw new Error("Unauthorized");
     }
 
     const product = await root.Query.getProduct(root, { productId: id });
