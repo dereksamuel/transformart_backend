@@ -4,12 +4,16 @@ require("dotenv").config({
   path: verifyPath(),
 });
 
+const dayjs = require("dayjs");
 const express = require("express");
 const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { fileImport } = require("./utils/fileImport");
 const resolvers = require("./resolvers");
+// const { auth } = require("firebase-admin");
+const { authMiddleware } = require("./middlewares/authMiddleware.middlewares");
+const { firebaseAdmin } = require("./utils/firebase");
 
 // intializations
 const app = express();
@@ -33,7 +37,23 @@ const corsOptions = {
 // middlewares
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use("/api/v1/gql", graphqlHTTP((req) => {
+app.use("/api/v1/gql", async (req, res, next) => {
+  const authToken = req.headers.authorization;
+  const uid = "eOtXEmtY2FWA2mjsdxgYdRG02jl2";
+
+  if (authToken && !global.decodedToken) {
+    global.decodedToken = await authMiddleware(authToken.split(" ")[1]);
+  }
+
+  if (global.decodedToken) {
+    if (dayjs.unix(global.decodedToken.exp).valueOf() <= dayjs().valueOf()) {
+      await firebaseAdmin.auth().revokeRefreshTokens(uid);
+      global.decodedToken = null;
+    }
+  }
+
+  next();
+}, graphqlHTTP((req) => {
   process.req = req;
 
   return {

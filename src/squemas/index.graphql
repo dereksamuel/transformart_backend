@@ -121,7 +121,6 @@ type Mutation {
 }
 
 type Mutation {
-  authenticate(
-    headerToken: String!
-  ): String
+  "For logout or signOut with fb"
+  logout: String
 }

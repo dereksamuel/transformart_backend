@@ -1,4 +1,3 @@
-const dayjs = require("dayjs");
 const { firebaseAdmin } = require("../utils/firebase");
 
 async function authMiddleware(headerToken) {
@@ -19,14 +18,6 @@ async function authMiddleware(headerToken) {
         .auth()
         .verifyIdToken(headerToken);
       global.decodedToken = decodedToken;
-
-      const interval = setInterval(() => {
-        console.log(dayjs.unix(decodedToken.exp).format("DD/MM/YYYY HH-mm-ss"), dayjs().format("DD/MM/YYYY HH-mm-ss"));
-        if (dayjs.unix(decodedToken.exp).format("DD/MM/YYYY HH-mm-ss") <= dayjs().format("DD/MM/YYYY HH-mm-ss")) {
-          global.decodedToken = null;
-          clearInterval(interval);
-        }
-      }, 1000);
 
       return decodedToken;
     } catch (error) {
