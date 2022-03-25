@@ -18,9 +18,10 @@ const { firebaseAdmin } = require("./utils/firebase");
 // intializations
 const app = express();
 const whiteList = [
-  "https://compassionate-edison-e8c580.netlify.app",
+  "https://transformart.netlify.app",
   "http://localhost:4001",
   "http://localhost:4000",
+  "http://localhost:4002",
   "http://localhost:3000"
 ];
 
