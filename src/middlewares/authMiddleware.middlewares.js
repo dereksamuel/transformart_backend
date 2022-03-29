@@ -13,20 +13,9 @@ async function authMiddleware(headerToken) {
       return global.decodedToken;
     }
 
-    try {
-      const decodedToken = await firebaseAdmin
-        .auth()
-        .verifyIdToken(headerToken);
-      global.decodedToken = decodedToken;
-
-      return decodedToken;
-    } catch (error) {
-      console.error("Not authorized", error);
-      return {
-        isError: true,
-        message: "Unauthorized"
-      };
-    }
+    return firebaseAdmin
+      .auth()
+      .verifyIdToken(headerToken);
   } else return {};
 }
 

@@ -11,7 +11,7 @@ module.exports = ({ models }) => ({
   async updateCategoriesProduct(root, data) {
     if (!global.decodedToken) {
       throw new Error("Unauthorized");
-    }
+    }//auth/id-token-expired
 
     const categoriesProduct = await root.Query.getCategoriesProduct(root, { categoriesProductsId: data.id });
     const response = await categoriesProduct.update(data);

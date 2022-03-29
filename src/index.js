@@ -43,7 +43,10 @@ app.use("/api/v1/gql", async (req, res, next) => {
   const uid = "eOtXEmtY2FWA2mjsdxgYdRG02jl2";
 
   if (authToken && !global.decodedToken) {
-    global.decodedToken = await authMiddleware(authToken.split(" ")[1]);
+    global.decodedToken = await authMiddleware(authToken.split(" ")[1]).catch((error) => {
+      console.error(error);
+      global.decodedToken = null;
+    });
   }
 
   if (global.decodedToken) {

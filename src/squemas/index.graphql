@@ -106,7 +106,7 @@ type Mutation {
   "It create some categories_products and should returns a categories_products"
   createCategoriesProduct(
     categoriesId: Int!
-    productsId: Int!
+    productsId: Int
   ): CategoriesProducts
   "It update some categories_products and should returns a categories_products"
   updateCategoriesProduct(
@@ -123,4 +123,6 @@ type Mutation {
 type Mutation {
   "For logout or signOut with fb"
   logout: String
+  "For verify if is auth"
+  verifyIsAuth: Boolean
 }
