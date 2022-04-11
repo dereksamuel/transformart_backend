@@ -2,12 +2,8 @@ const { firebaseAdmin } = require("../utils/firebase");
 
 async function authMiddleware(headerToken) {
   if (!process.argv.find((arg) => arg === "--mode-test")) {
-    if (!headerToken) {
-      return {
-        isError: true,
-        message: "Token not provided"
-      };
-    }
+    if (!headerToken)
+      return;
 
     if (global.decodedToken) {
       return global.decodedToken;
