@@ -116,7 +116,9 @@ type Mutation {
   ): CategoriesProducts
   "It delete one categories_products and returns id deleted"
   deleteCategoriesProduct(
-    id: Int!
+    id: Int
+    categoriesId: Int
+    productsId: Int
   ): String
 }
 

@@ -19,13 +19,17 @@ module.exports = ({ models }) => ({
     return response;
   },
 
-  async deleteCategoriesProduct(root, { id }) {
+  async deleteCategoriesProduct(root, { id, categoriesId, productsId }) {
     if (!global.decodedToken) {
       throw new Error("Unauthorized");
     }
 
-    const categoriesProduct = await root.Query.getCategoriesProduct(root, { categoriesProductsId: id });
-    await categoriesProduct.destroy();
+    models.CategoriesProducts.destroy({
+      where: productsId ? {
+        productsId,
+        categoriesId
+      } : { id }
+    });
 
     return id;
   }
