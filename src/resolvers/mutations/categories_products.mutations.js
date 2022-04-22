@@ -4,6 +4,7 @@ module.exports = ({ models }) => ({
       throw new Error("Unauthorized");
     }
 
+    console.log(data);
     const newCategory = await models.CategoriesProducts.create(data);
     return newCategory;
   },
