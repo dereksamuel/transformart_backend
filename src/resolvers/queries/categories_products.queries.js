@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const attributes = ["id", ["categories_id", "categoriesId"], ["products_id", "productsId"]];
 
 module.exports = ({ models }) => ({
@@ -8,10 +10,10 @@ module.exports = ({ models }) => ({
     const categoriesProducts = await models.CategoriesProducts.findAll({
       attributes,
       where: $or ? {
-        $or
+        [Op.or]: $or
       } : {}
     });
-    // FIXME:  FIX $OR ERROR INVALID VALUE                                                 
+
     return categoriesProducts;
   },
 
