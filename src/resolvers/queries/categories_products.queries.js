@@ -2,13 +2,16 @@ const attributes = ["id", ["categories_id", "categoriesId"], ["products_id", "pr
 
 module.exports = ({ models }) => ({
   async getCategoriesProducts() {
-    const where = process.req.headers.filterswherecp;
+    let $or = process.req.headers.filters$orcp;
+    $or = $or.length ? JSON.parse($or) : null;
 
     const categoriesProducts = await models.CategoriesProducts.findAll({
       attributes,
-      where: where ? JSON.parse() : {}
+      where: $or ? {
+        $or
+      } : {}
     });
-    // FIXME: $or pasar to string from object                                                 
+    // FIXME:  FIX $OR ERROR INVALID VALUE                                                 
     return categoriesProducts;
   },
 
