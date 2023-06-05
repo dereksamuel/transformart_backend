@@ -1,5 +1,7 @@
 const { development_URI, production_URI } = require("../utils/keys");
 
+console.log("development_URI");
+
 module.exports = {
   development: {
     url: development_URI,
