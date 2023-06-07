@@ -16,7 +16,6 @@ type Product {
   srcVideo: String!
   facebookLink: String!
   instagramLink: String!
-  tweeterLink: String!
   createdAt: String
 }
 
@@ -61,7 +60,6 @@ type Mutation {
     srcVideo: String!
     facebookLink: String!
     instagramLink: String!
-    tweeterLink: String!
     createdAt: String
   ): Product
   "It update some product and should returns a product"
@@ -75,7 +73,6 @@ type Mutation {
     srcVideo: String
     facebookLink: String
     instagramLink: String
-    tweeterLink: String
     createdAt: String
   ): Product
   "It delete one product and returns id deleted"

@@ -64,11 +64,6 @@ const PRODUCT_SCHEMA = {
     allowNull: false,
     field: "instagram_link"
   },
-  tweeterLink: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-    field: "tweeter_link"
-  },
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
